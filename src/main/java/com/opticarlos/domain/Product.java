@@ -1,37 +1,50 @@
 package com.opticarlos.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
- * Esta clase representa un producto en la aplicación.
+ * Clase que representa un producto en la tienda.
  */
 @Data
 @AllArgsConstructor
-@ToString
+@Builder
 public class Product {
 
-    private Integer id;
-    private String code;
-    private String name;
-    private String description;
-    private String image;
-    private BigDecimal price;
-
-    private LocalDateTime dateCreated;
-    private LocalDateTime dateUpdated;
+    /**
+     * ID único del producto.
+     */
+    private Long productId;
 
     /**
-     * Constructor de la clase Product.
-     * Genera un código UUID único para el producto.
+     * Nombre del producto.
      */
-    public Product() {
-        this.setCode(UUID.randomUUID().toString());
-    }
+    private String name;
+
+    /**
+     * Precio del producto.
+     */
+    private Double price;
+
+    /**
+     * Marca del producto.
+     */
+    private String brand;
+
+    /**
+     * Género al que está dirigido el producto.
+     */
+    private Gender gender;
+
+    /**
+     * Indica si el producto está activo o no.
+     */
+    private boolean active;
+
+    /**
+     * ID de la categoría a la que pertenece el producto.
+     */
+    private int categoryId;
 
 }

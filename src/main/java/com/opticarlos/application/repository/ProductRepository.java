@@ -1,40 +1,52 @@
 package com.opticarlos.application.repository;
 
-import com.opticarlos.domain.Product;
+import com.opticarlos.infrastructure.entity.ProductEntity;
+import org.springframework.stereotype.Repository;
 
-/**
- * Esta interfaz define las operaciones para acceder a los productos en el repositorio.
- */
+import java.util.List;
+import java.util.Optional;
+
+@Repository
 public interface ProductRepository {
 
     /**
-     * Obtiene todos los productos almacenados en el repositorio.
+     * Encuentra un producto por su ID.
      *
-     * @return Una colección de productos.
+     * @param productId El ID del producto a buscar.
+     * @return El producto encontrado o un Optional vacío si no se encuentra.
      */
-    Iterable<Product> getProducts();
+    Optional<ProductEntity> findById(Integer productId);
 
     /**
-     * Obtiene un producto por su ID.
+     * Guarda un nuevo producto o actualiza un producto existente.
      *
-     * @param id El ID del producto a obtener.
-     * @return El producto correspondiente al ID dado, o null si no se encuentra.
+     * @param productEntity El producto a guardar o actualizar.
+     * @return El producto guardado o actualizado.
      */
-    Product getProductById(Integer id);
-
-    /**
-     * Guarda un producto en el repositorio.
-     *
-     * @param product El producto a guardar.
-     * @return El producto guardado.
-     */
-    Product saveProduct(Product product);
+    ProductEntity save(ProductEntity productEntity);
 
     /**
      * Elimina un producto por su ID.
      *
-     * @param id El ID del producto a eliminar.
+     * @param productId El ID del producto a eliminar.
      */
-    void deleteProductById(Integer id);
+    void deleteById(Integer productId);
+
+    /**
+     * Obtiene todos los productos disponibles.
+     *
+     * @return Una lista de productos disponibles.
+     */
+    List<ProductEntity> findAll();
+
+    /**
+     * Obtiene productos por su categoría.
+     *
+     * @param categoryId El ID de la categoría de productos.
+     * @return Una lista de productos pertenecientes a la categoría especificada.
+     */
+    List<ProductEntity> getProductsByCategoryId(Integer categoryId);
+
+    List<ProductEntity> findAllByNameContaining(String keyword);
 
 }

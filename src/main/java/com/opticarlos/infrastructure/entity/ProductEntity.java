@@ -1,61 +1,69 @@
 package com.opticarlos.infrastructure.entity;
 
+import com.opticarlos.domain.Gender;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.springframework.data.annotation.Id;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
- * Clase que representa la entidad Product en la base de datos.
+ * Entidad que representa un producto en la base de datos.
  */
 @Entity
 @Table(name = "products")
+@Builder
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class ProductEntity {
 
     /**
-     * Identificador único del producto.
+     * ID único del producto.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    /**
-     * Código único del producto.
-     */
-    private String code;
+    @Column(name = "product_id")
+    @jakarta.persistence.Id
+    private Long productId;
 
     /**
      * Nombre del producto.
      */
+    @NotBlank(message = "El nombre del producto no puede estar vacío")
     private String name;
-
-    /**
-     * Descripción del producto.
-     */
-    private String description;
-
-    /**
-     * Ruta de la imagen asociada al producto.
-     */
-    private String image;
 
     /**
      * Precio del producto.
      */
-    private BigDecimal price;
+    @NotNull(message = "El precio del producto no puede estar vacío")
+    @DecimalMin(value = "0.0", message = "El precio debe ser igual o mayor a 0")
+    private Double price;
 
     /**
-     * Fecha en que se creó el producto.
+     * Marca del producto.
      */
-    private LocalDateTime dateCreated;
+    private String brand;
 
     /**
-     * Fecha en que se actualizó el producto por última vez.
+     * Género al que está dirigido el producto.
      */
-    private LocalDateTime dateUpdated;
+    @NotNull(message = "El género del producto no puede estar vacío")
+    private Gender gender;
+
+    /**
+     * Indica si el producto está activo o no.
+     * Valor predeterminado: true
+     */
+    private boolean active;
+
+    /**
+     * ID de la categoría a la que pertenece el producto.
+     */
+    // Relación ManyToOne con CategoryEntity
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 
 }
