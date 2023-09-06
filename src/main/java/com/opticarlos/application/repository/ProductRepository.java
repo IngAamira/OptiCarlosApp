@@ -15,7 +15,7 @@ public interface ProductRepository {
      * @param productId El ID del producto a buscar.
      * @return El producto encontrado o un Optional vacío si no se encuentra.
      */
-    Optional<ProductEntity> findById(Integer productId);
+    Optional<ProductEntity> findById(Long productId);
 
     /**
      * Guarda un nuevo producto o actualiza un producto existente.
@@ -30,7 +30,7 @@ public interface ProductRepository {
      *
      * @param productId El ID del producto a eliminar.
      */
-    void deleteById(Integer productId);
+    void deleteById(Long productId);
 
     /**
      * Obtiene todos los productos disponibles.
@@ -39,13 +39,13 @@ public interface ProductRepository {
      */
     List<ProductEntity> findAll();
 
-    /**
+/*    *//**
      * Obtiene productos por su categoría.
      *
-     * @param categoryId El ID de la categoría de productos.
+     //* @param categoryId El ID de la categoría de productos.
      * @return Una lista de productos pertenecientes a la categoría especificada.
-     */
-    List<ProductEntity> getProductsByCategoryId(Integer categoryId);
+     *//*
+    List<ProductEntity> getProductsByCategoryId(Long categoryId);*/
 
     List<ProductEntity> findAllByNameContaining(String keyword);
 

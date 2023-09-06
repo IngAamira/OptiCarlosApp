@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductJpaRepository extends JpaRepository<ProductEntity, Integer> {
+public interface ProductJpaRepository extends JpaRepository<ProductEntity, Long> {
 
 /*    *//**
      * Obtiene productos por su categoría.
@@ -15,7 +15,7 @@ public interface ProductJpaRepository extends JpaRepository<ProductEntity, Integ
      //* @param categoryId El ID de la categoría de productos.
      * @return Una lista de productos pertenecientes a la categoría especificada.
      *//*
-    List<ProductEntity> findByCategoryId(Integer categoryId);*/
+    List<ProductEntity> findByCategoryId(Long categoryId);*/
 
     List<ProductEntity> findAllByNameContaining(String name);
 

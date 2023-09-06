@@ -2,14 +2,16 @@ package com.opticarlos.infrastructure.mapper;
 
 import com.opticarlos.domain.Product;
 import com.opticarlos.infrastructure.entity.ProductEntity;
-import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = CategoryMapper.class)
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = "spring")
 public interface ProductMapper {
 
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
@@ -21,7 +23,7 @@ public interface ProductMapper {
             @Mapping(source = "brand", target = "brand"),
             @Mapping(source = "gender", target = "gender"),
             @Mapping(source = "active", target = "active"),
-            @Mapping(source = "category.categoryId", target = "categoryId") // Mapea categoryId desde la propiedad "category"
+            @Mapping(source = "category", target = "category")
     })
     Product toProduct(ProductEntity productEntity);
 
@@ -32,11 +34,15 @@ public interface ProductMapper {
             @Mapping(source = "brand", target = "brand"),
             @Mapping(source = "gender", target = "gender"),
             @Mapping(source = "active", target = "active"),
-            @Mapping(source = "categoryId", target = "category.categoryId") // Mapea categoryId hacia la propiedad "category"
+            @Mapping(source = "category", target = "category")
     })
     ProductEntity toProductEntity(Product product);
 
-    List<Product> toProducts(List<ProductEntity> productEntities);
+    default List<Product> toProducts(List<ProductEntity> productEntities) {
+        return productEntities.stream()
+                .map(this::toProduct)
+                .collect(Collectors.toList());
+    }
 
 }
 

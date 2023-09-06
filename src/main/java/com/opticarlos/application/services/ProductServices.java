@@ -12,28 +12,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Esta clase proporciona métodos para manejar los productos en la aplicación.
- */
 @Service
 public class ProductServices {
 
     private final ProductJpaRepository productJpaRepository;
     private ProductMapper productMapper;
 
-
-    /**
-     * Constructor de la clase ProductService.
-     *
-     * @param productJpaRepository El repositorio de productos utilizado para acceder a los datos de los productos.
-     */
     @Autowired
     public ProductServices(ProductJpaRepository productJpaRepository, ProductMapper productMapper) {
         this.productJpaRepository = productJpaRepository;
         this.productMapper = productMapper;
     }
 
-    public Product getProductById(Integer productId) {
+    public Product getProductById(Long productId) {
         Optional<ProductEntity> productEntityOptional = productJpaRepository.findById(productId);
         if (productEntityOptional.isEmpty()) {
             throw new ProductNotFoundException(productId);
@@ -43,7 +34,7 @@ public class ProductServices {
 
     public List<Product> getAllProducts(String filterBy) {
         List<ProductEntity> productEntities = productJpaRepository.findAllByNameContaining(filterBy);
-        return (List<Product>) productMapper.toProducts(productEntities);
+        return productMapper.toProducts(productEntities);
     }
 
     public Product createProduct(ProductEntity productEntity) {
@@ -54,7 +45,7 @@ public class ProductServices {
         return productMapper.toProduct(savedEntity);
     }
 
-    public Product updateProduct(Integer productId, ProductEntity productEntity) {
+    public Product updateProduct(Long productId, ProductEntity productEntity) {
         Optional<ProductEntity> productEntityOptional = productJpaRepository.findById(productId);
         if (productEntityOptional.isEmpty()) {
             throw new ProductNotFoundException(productId);
@@ -68,7 +59,7 @@ public class ProductServices {
         return productMapper.toProduct(updatedEntity);
     }
 
-    public boolean deleteProduct(Integer productId) {
+    public boolean deleteProduct(Long productId) {
         Optional<ProductEntity> productEntityOptional = productJpaRepository.findById(productId);
         if (productEntityOptional.isEmpty()) {
             throw new ProductNotFoundException(productId);
@@ -76,5 +67,4 @@ public class ProductServices {
         productJpaRepository.deleteById(productId);
         return false;
     }
-
 }

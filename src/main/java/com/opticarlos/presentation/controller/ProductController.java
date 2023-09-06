@@ -3,15 +3,15 @@ package com.opticarlos.presentation.controller;
 import com.opticarlos.application.services.ProductServices;
 import com.opticarlos.domain.Product;
 import com.opticarlos.infrastructure.entity.ProductEntity;
+import com.opticarlos.presentation.dto.ProductRequest;
+import com.opticarlos.presentation.dto.ProductResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,54 +26,54 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Product>> getAllProducts(
+    public ResponseEntity<List<ProductResponse>> getAllProducts(
             @RequestParam(defaultValue = "") String filterBy
     ) {
         List<Product> products = productServices.getAllProducts(filterBy);
-        return ResponseEntity.ok(products);
+        List<ProductResponse> productResponses = products.stream()
+                .map(ProductResponse::fromProduct)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(productResponses);
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProductById(@PathVariable Integer productId) {
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long productId) {
         Product product = productServices.getProductById(productId);
         if (product != null) {
-            return ResponseEntity.ok(product);
+            return ResponseEntity.ok(ProductResponse.fromProduct(product));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody ProductEntity productEntity) {
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest productRequest) {
+        ProductEntity productEntity = productRequest.toProductEntity(); // Utiliza el método toProductEntity() en lugar de toProduct()
         Product createdProduct = productServices.createProduct(productEntity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+        ProductResponse productResponse = ProductResponse.fromProduct(createdProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productResponse);
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Integer productId, @Valid @RequestBody ProductEntity productEntity) {
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductRequest productRequest) {
+        ProductEntity productEntity = productRequest.toProductEntity(); // Utiliza el método toProductEntity() en lugar de toProduct()
         Product updatedProduct = productServices.updateProduct(productId, productEntity);
         if (updatedProduct != null) {
-            return ResponseEntity.ok(updatedProduct);
+            ProductResponse productResponse = ProductResponse.fromProduct(updatedProduct);
+            return ResponseEntity.ok(productResponse);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer productId) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
         boolean deleted = productServices.deleteProduct(productId);
         if (deleted) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleValidationExceptions(BindingResult bindingResult) {
-        return bindingResult.getFieldErrors().stream()
-                .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
     }
 
 }
