@@ -3,12 +3,14 @@ package com.opticarlos.application.services;
 import com.opticarlos.application.exceptions.InvalidProductDataException;
 import com.opticarlos.application.exceptions.ProductNotFoundException;
 import com.opticarlos.domain.Product;
+import com.opticarlos.domain.Category;
 import com.opticarlos.infrastructure.adapter.ProductJpaRepository;
 import com.opticarlos.infrastructure.entity.ProductEntity;
 import com.opticarlos.infrastructure.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,4 +69,30 @@ public class ProductServices {
         productJpaRepository.deleteById(productId);
         return false;
     }
+
+    public List<Product> getProductsByCategory(Category category) {
+        List<ProductEntity> productEntities = productJpaRepository.findByCategory(category);
+        List<Product> products = new ArrayList<>();
+
+        for (ProductEntity productEntity : productEntities) {
+            Product product = new Product(
+                    productEntity.getProductId(),
+                    productEntity.getName(),
+                    productEntity.getPrice(),
+                    productEntity.getBrand(),
+                    productEntity.getGender(),
+                    category,
+                    productEntity.getActive(),
+                    productEntity.getStock(),
+                    productEntity.getDescription(),
+                    productEntity.getDateCreated(),
+                    productEntity.getDateUpdated(),
+                    productEntity.getImage()
+            );
+            products.add(product);
+        }
+
+        return products;
+    }
+
 }

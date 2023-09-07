@@ -22,8 +22,11 @@ public interface ProductMapper {
             @Mapping(source = "price", target = "price"),
             @Mapping(source = "brand", target = "brand"),
             @Mapping(source = "gender", target = "gender"),
-            @Mapping(source = "active", target = "active"),
-            @Mapping(source = "category", target = "category")
+            @Mapping(source = "category", target = "category"),
+            @Mapping(source = "stock", target = "stock"),
+            @Mapping(source = "description", target = "description"),
+            @Mapping(source = "dateCreated", target = "dateCreated"),
+            @Mapping(source = "dateUpdated", target = "dateUpdated")
     })
     Product toProduct(ProductEntity productEntity);
 
@@ -33,8 +36,11 @@ public interface ProductMapper {
             @Mapping(source = "price", target = "price"),
             @Mapping(source = "brand", target = "brand"),
             @Mapping(source = "gender", target = "gender"),
-            @Mapping(source = "active", target = "active"),
-            @Mapping(source = "category", target = "category")
+            @Mapping(source = "category", target = "category"),
+            @Mapping(source = "stock", target = "stock"),
+            @Mapping(source = "description", target = "description"),
+            @Mapping(source = "dateCreated", target = "dateCreated"),
+            @Mapping(source = "dateUpdated", target = "dateUpdated")
     })
     ProductEntity toProductEntity(Product product);
 

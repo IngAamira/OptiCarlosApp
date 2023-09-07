@@ -2,6 +2,7 @@ package com.opticarlos.presentation.controller;
 
 import com.opticarlos.application.services.ProductServices;
 import com.opticarlos.domain.Product;
+import com.opticarlos.domain.Category;
 import com.opticarlos.infrastructure.entity.ProductEntity;
 import com.opticarlos.presentation.dto.ProductRequest;
 import com.opticarlos.presentation.dto.ProductResponse;
@@ -74,6 +75,15 @@ public class ProductController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<ProductResponse>> getProductsByCategory(@PathVariable Category category) {
+        List<Product> products = productServices.getProductsByCategory(category);
+        List<ProductResponse> productResponses = products.stream()
+                .map(ProductResponse::fromProduct)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(productResponses);
     }
 
 }

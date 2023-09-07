@@ -8,10 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Esta clase proporciona métodos para subir y eliminar archivos en la aplicación.
- */
-
 public class UploadFile {
     private final String FOLDER = "images//";
     private final String IMG_DEFAULT = "default.jpg";
