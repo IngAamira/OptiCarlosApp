@@ -1,16 +1,14 @@
 package com.opticarlos.infrastructure.entity;
 
+import com.opticarlos.domain.Category;
 import com.opticarlos.domain.Gender;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import jakarta.persistence.*;
 
-/**
- * Entidad que representa un producto en la base de datos.
- */
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "products")
 @Builder
@@ -19,51 +17,61 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 public class ProductEntity {
 
-    /**
-     * ID único del producto.
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     @jakarta.persistence.Id
     private Long productId;
 
-    /**
-     * Nombre del producto.
-     */
     @NotBlank(message = "El nombre del producto no puede estar vacío")
+    @Size(min = 1, max = 255, message = "La longitud del nombre debe estar entre 1 y 255 caracteres")
     private String name;
 
-    /**
-     * Precio del producto.
-     */
     @NotNull(message = "El precio del producto no puede estar vacío")
     @DecimalMin(value = "0.0", message = "El precio debe ser igual o mayor a 0")
+    @Column(columnDefinition = "NUMERIC(10,2)") // Define la precisión como NUMERIC(10,2)
     private Double price;
 
-    /**
-     * Marca del producto.
-     */
+    @Size(max = 255, message = "La longitud de la marca no puede exceder los 255 caracteres")
     private String brand;
 
-    /**
-     * Género al que está dirigido el producto.
-     */
     @NotNull(message = "El género del producto no puede estar vacío")
+    @Enumerated(EnumType.STRING) // Especifica cómo se debe almacenar el Enum en la base de datos
     private Gender gender;
 
-    /**
-     * Indica si el producto está activo o no.
-     * Valor predeterminado: true
-     */
-    private boolean active;
+    @NotNull(message = "La categoría del producto no puede estar vacía")
+    @Enumerated(EnumType.STRING) // Especifica cómo se debe almacenar el Enum en la base de datos
+    private Category category;
 
-    /**
-     * ID de la categoría a la que pertenece el producto.
-     */
-    // Relación ManyToOne con CategoryEntity
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private CategoryEntity category;
+    @NotNull(message = "El estado activo/inactivo del producto no puede estar vacío")
+    private Boolean active;
+
+    @Min(value = 0, message = "El stock debe ser igual o mayor a 0")
+    private Integer stock;
+
+    @Size(max = 1000, message = "La longitud de la descripción no puede exceder los 1000 caracteres")
+    private String description;
+
+    @Column(name = "date_created", updatable = false)
+    @NotNull(message = "La fecha de creación no puede estar vacía")
+    private LocalDateTime dateCreated;
+
+    @Column(name = "date_updated")
+    @NotNull(message = "La fecha de actualización no puede estar vacía")
+    private LocalDateTime dateUpdated;
+
+    @Size(max = 255, message = "La longitud del nombre de la imagen no puede exceder los 255 caracteres")
+    private String image;
+
+
+    @PrePersist
+    protected void onCreate() {
+        dateCreated = LocalDateTime.now(); // Establecer la fecha de creación al insertar
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        dateUpdated = LocalDateTime.now(); // Establecer la fecha de actualización al actualizar
+    }
 
 }

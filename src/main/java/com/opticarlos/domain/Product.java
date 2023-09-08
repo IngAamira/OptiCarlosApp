@@ -4,38 +4,42 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
- * Clase que representa un producto en la tienda.
+ * Representa un producto en el dominio del negocio.
  */
 @Data
 @AllArgsConstructor
 @Builder
 public class Product {
 
-    /**
-     * ID único del producto.
-     */
     private Long productId;
 
     /**
-     * Nombre del producto.
+     * El nombre del producto.
      */
     private String name;
 
     /**
-     * Precio del producto.
+     * El precio del producto.
      */
     private Double price;
 
     /**
-     * Marca del producto.
+     * La marca del producto.
      */
     private String brand;
 
     /**
-     * Género al que está dirigido el producto.
+     * El género al que está dirigido el producto.
      */
     private Gender gender;
+
+    /**
+     * La categoría a la que pertenece el producto.
+     */
+    private Category category;
 
     /**
      * Indica si el producto está activo o no.
@@ -43,8 +47,28 @@ public class Product {
     private boolean active;
 
     /**
-     * ID de la categoría a la que pertenece el producto.
+     * La cantidad disponible en stock.
      */
-    private int categoryId;
+    private int stock;
+
+    /**
+     * La descripción del producto.
+     */
+    private String description;
+
+    /**
+     * La fecha y hora en que se creó el producto.
+     */
+    private LocalDateTime dateCreated;
+
+    /**
+     * La fecha y hora en que se actualizó por última vez el producto.
+     */
+    private LocalDateTime dateUpdated;
+
+    /**
+     * El nombre del archivo de imagen asociado al producto.
+     */
+    private String image;
 
 }
