@@ -20,6 +20,11 @@ public class ProductRequest {
     private boolean active;
     private Category category;
 
+    /**
+     * Convierte este objeto ProductRequest en un objeto Product.
+     *
+     * @return Un objeto Product con los datos de este ProductRequest.
+     */
     public Product toProduct() {
         return Product.builder()
                 .name(name)
@@ -31,6 +36,11 @@ public class ProductRequest {
                 .build();
     }
 
+    /**
+     * Convierte este objeto ProductRequest en un objeto ProductEntity.
+     *
+     * @return Un objeto ProductEntity con los datos de este ProductRequest.
+     */
     public ProductEntity toProductEntity() {
         return ProductEntity.builder()
                 .name(name)

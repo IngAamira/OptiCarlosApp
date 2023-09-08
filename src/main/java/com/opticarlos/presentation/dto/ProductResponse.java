@@ -1,36 +1,31 @@
-package com.opticarlos.presentation.dto;
+package com.opticarlos.infrastructure.mapper;
 
-import com.opticarlos.domain.Category;
-import com.opticarlos.domain.Gender;
 import com.opticarlos.domain.Product;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.opticarlos.infrastructure.entity.ProductEntity;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductResponse {
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
 
-    private Long productId;
-    private String name;
-    private Double price;
-    private String brand;
-    private Gender gender;
-    private boolean active;
-    private Category category;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    public static ProductResponse fromProduct(Product product) {
-        return new ProductResponse(
-                product.getProductId(),
-                product.getName(),
-                product.getPrice(),
-                product.getBrand(),
-                product.getGender(),
-                product.isActive(),
-                product.getCategory()
-        );
-    }
+@Mapper(componentModel = "spring")
+public interface ProductMapper {
 
-}
+    ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
+    @Mappings({
+            @Mapping(source = "productId", target = "productId"),
+            @Mapping(source = "name", target = "name"),
+            @Mapping(source = "price", target = "price"),
+            @Mapping(source = "brand", target = "brand"),
+            @Mapping(source = "gender", target = "gender"),
+            @Mapping(source = "category", target = "category"),
+            @Mapping(source = "stock", target = "stock"),
+            @Mapping(source = "description", target = "description"),
+            @Mapping(source = "dateCreated", target = "dateCreated"),
+            @Mapping(source = "dateUpdated", target = "dateUpdated")
+    })
+    Product toProduct(ProductEntity produ

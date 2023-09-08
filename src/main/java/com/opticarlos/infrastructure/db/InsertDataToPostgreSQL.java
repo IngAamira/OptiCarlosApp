@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Random;
 
+/**
+ * Esta clase se utiliza para insertar datos de productos en una base de datos PostgreSQL.
+ */
 public class InsertDataToPostgreSQL {
 
     private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/opticarlosdb";
@@ -121,16 +124,36 @@ public class InsertDataToPostgreSQL {
         }
     }
 
+    /**
+     * Borra todos los registros de la tabla "products" en la base de datos.
+     *
+     * @param connection La conexión a la base de datos.
+     * @throws SQLException Si se produce un error al ejecutar la consulta SQL.
+     */
     private static void clearTable(Connection connection) throws SQLException {
         String truncateSql = "TRUNCATE TABLE products";
         PreparedStatement truncateStatement = connection.prepareStatement(truncateSql);
         truncateStatement.executeUpdate();
     }
 
+    /**
+     * Obtiene un elemento aleatorio de un arreglo.
+     *
+     * @param array  El arreglo del cual obtener el elemento.
+     * @param random Un generador de números aleatorios.
+     * @return Un elemento aleatorio del arreglo.
+     */
     private static String getRandomElement(String[] array, Random random) {
         return array[random.nextInt(array.length)];
     }
 
+    /**
+     * Obtiene un nombre de producto aleatorio según la categoría especificada.
+     *
+     * @param category La categoría de producto.
+     * @param random   Un generador de números aleatorios.
+     * @return Un nombre de producto aleatorio para la categoría.
+     */
     private static String getRandomProductName(String category, Random random) {
         switch (category) {
             case "EYEGLASSES":
@@ -146,6 +169,13 @@ public class InsertDataToPostgreSQL {
         }
     }
 
+    /**
+     * Obtiene una descripción aleatoria según la categoría especificada.
+     *
+     * @param category La categoría de producto.
+     * @param random   Un generador de números aleatorios.
+     * @return Una descripción aleatoria para la categoría.
+     */
     private static String getRandomDescription(String category, Random random) {
         switch (category) {
             case "EYEGLASSES":
