@@ -1,13 +1,14 @@
-# Documentación del Proyecto OptiCarlosApp
+# OptiCarlosApp Project Documentation
 
-## Descripción
-OptiCarlosApp es una aplicación de comercio de productos ópticos desarrollada en Java con el framework Spring Boot. La aplicación permite a los usuarios explorar y comprar productos relacionados con la óptica, como gafas, lentes de contacto y accesorios.
+## Description
+OptiCarlosApp is an optical products commerce application developed in Java using the Spring Boot framework. The application allows users to browse and purchase optical-related products such as glasses, contact lenses, and accessories.
 
-## Estructura del Proyecto
-El proyecto sigue una arquitectura Modelo-Vista-Controlador (MVC) para el desarrollo de aplicaciones web en Spring Boot. En esta arquitectura, los componentes clave incluyen controladores, modelos y vistas que se utilizan para manejar las solicitudes HTTP, gestionar la lógica de negocio y presentar la interfaz de usuario.
+## Project Structure
 
+### Estructura del Proyecto
+The project follows a Model-View-Controller (MVC) architecture for web application development in Spring Boot. In this architecture, key components include controllers, models, and views that are used to handle HTTP requests, manage business logic, and present the user interface.
 
-### Estructura de Carpetas
+### Folder Structure
 - `src`
     - `main`
         - `java`
@@ -19,120 +20,132 @@ El proyecto sigue una arquitectura Modelo-Vista-Controlador (MVC) para el desarr
                         - `adapter`
                         - `db`
                         - `entity`
-                        - `mapper`
-                    - `presentation`
 
-### Componentes Principales
-#### Clases y Paquetes
+The following sections describe the key components and packages of the project.
 
-- `com.opticarlos.application.exceptions`: Contiene las clases de excepción personalizadas como `InvalidProductDataException` y `ProductNotFoundException`.
-- `com.opticarlos.application.services`: Contiene los servicios de la aplicación para manejar la lógica de negocio.
-- `com.opticarlos.domain`: Contiene las clases de dominio como `Product`, `Category`, y `Gender`.
-- `com.opticarlos.infrastructure.adapter`: Contiene adaptadores para interactuar con la capa de infraestructura y bases de datos.
-- `com.opticarlos.infrastructure.db`: Contiene la configuración y scripts para la base de datos PostgreSQL.
-- `com.opticarlos.infrastructure.entity`: Contiene las entidades JPA que representan productos y categorías en la base de datos.
-- `com.opticarlos.infrastructure.mapper`: Contiene los mappers que convierten entre entidades y objetos de dominio.
-- `com.opticarlos.presentation.controller`: Contiene los controladores que manejan las peticiones HTTP y gestionan la API.
+### Clases y Paquetes
 
-### Manejo de Excepciones
-- `com.opticarlos.application.exceptions.InvalidProductDataException`: Excepción lanzada cuando se encuentran datos de producto no válidos al crear o actualizar un producto.
-- `com.opticarlos.application.exceptions.ProductNotFoundException`: Excepción lanzada cuando no se encuentra un producto con el ID especificado.
+#### `com.opticarlos.application.exceptions`
+Contains custom exception classes like `InvalidProductDataException` and `ProductNotFoundException`.
 
-## Implementación de Paginación y Filtrado
-La implementación de paginación y filtrado en los endpoints de listado se realiza utilizando Spring Data JPA y Query Methods. Los métodos de búsqueda en el repositorio de productos permiten buscar productos según diversos criterios como nombre y categoría.
+#### `com.opticarlos.application.services`
+Contains application services to handle business logic.
 
-## Uso de Tecnologías
-- Spring Boot: Framework para la construcción de aplicaciones Java.
-- Spring Data JPA: Para el acceso a bases de datos.
-- MapStruct: Para la conversión eficiente entre entidades y objetos de dominio.
-- Reactor: Biblioteca para programación reactiva.
-- Lombok: Para la generación de código repetitivo.
-- PostgreSQL: Base de datos utilizada para almacenar datos de productos y categorías.
+#### `com.opticarlos.domain`
+Contains domain classes such as `Product`, `Category`, and `Gender`.
 
-## Documentación de Endpoints
-A continuación se detallan los endpoints principales de la API.
+#### `com.opticarlos.infrastructure.adapter`
+Contains adapters to interact with the infrastructure and databases.
 
-### Obtener todos los productos (getAllProducts)
-- Descripción: Este endpoint te permite obtener una lista paginada de todos los productos disponibles.
-- Método HTTP: GET
-- Ruta: `/api/products/all`
-- Parámetros de consulta:
-    - `page` (Opcional): Número de página, comenzando desde 0. Por defecto, es 0.
-    - `size` (Opcional): Tamaño de la página, que determina la cantidad de productos por página. Por defecto, es 5.
-    - `filterBy` (Opcional): Filtrar los productos por nombre. Por defecto, se aplica ningún filtro.
-- Respuesta Exitosa (200 OK):
-    - Tipo: JSON
-    - Descripción: Una lista de productos disponibles según los parámetros de paginación y filtro.
+#### `com.opticarlos.infrastructure.db`
+Contains configuration and scripts for the PostgreSQL database.
 
-### Obtener un producto por ID (getProductById)
-- Descripción: Este endpoint te permite obtener un producto por su ID.
-- Método HTTP: GET
-- Ruta: `/api/products/{productId}`
-- Parámetros de ruta:
-    - `productId` (Requerido): El ID del producto que deseas obtener.
-- Respuesta Exitosa (200 OK):
-    - Tipo: JSON
-    - Descripción: El producto encontrado con el ID especificado.
-- Respuesta No Encontrada (404 Not Found):
-    - Tipo: Vacío (Sin contenido)
-    - Descripción: Si el producto no se encuentra.
+#### `com.opticarlos.infrastructure.entity`
+Contains JPA entities representing products and categories in the database.
 
-### Crear un nuevo producto (createProduct)
-- Descripción: Este endpoint te permite crear un nuevo producto.
-- Método HTTP: POST
-- Ruta: `/api/products`
+#### `com.opticarlos.infrastructure.mapper`
+Contains mappers that convert between entities and domain objects.
+
+#### `com.opticarlos.presentation.controller`
+Contains controllers that handle HTTP requests and manage the API.
+
+## Exception Handling
+- `com.opticarlos.application.exceptions.InvalidProductDataException`: Exception thrown when invalid product data is encountered while creating or updating a product.
+- `com.opticarlos.application.exceptions.ProductNotFoundException`: Exception thrown when a product with the specified ID is not found.
+
+## Pagination and Filtering Implementation
+Pagination and filtering in list endpoints are implemented using Spring Data JPA and Query Methods. Repository methods for product searches allow searching products based on various criteria such as name and category.
+
+## Technologies Used
+- Spring Boot: Framework for Java application development.
+- Spring Data JPA: For database access.
+- MapStruct: For efficient conversion between entities and domain objects.
+- Reactor: Library for reactive programming.
+- Lombok: For generating repetitive code.
+- PostgreSQL: Database used to store product and category data.
+
+## API Endpoint Documentation
+Below are the main endpoints of the API.
+
+### Get All Products (getAllProducts)
+Description: This endpoint allows you to get a paginated list of all available products.
+- HTTP Method: GET
+- Path: /api/products/all
+- Query Parameters:
+    - page (Optional): Page number, starting from 0. Default is 0.
+    - size (Optional): Page size, determining the number of products per page. Default is 5.
+    - filterBy (Optional): Filtrar los productos por nombre. Por defecto, se aplica ningún filtro.
+- Successful Response (200 OK):
+    - Type: JSON
+    - Description: A list of products available based on pagination and filtering parameters.
+
+### Get a Product by ID (getProductById)
+Description: This endpoint allows you to get a product by its ID.
+- HTTP Method: GET
+- Path: /api/products/{productId}
+- Path Parameters:
+    - productId (Required): El ID del producto que deseas obtener.
+- Successful Response (200 OK):
+    - Type: JSON
+    - Description: The product found with the specified ID.
+- Not Found Response (404 Not Found):
+    - Type: Vacío (Sin contenido)
+    - Description: If the product is not found.
+
+### Create a New Product (createProduct)
+Description: This endpoint allows you to create a new product.
+- HTTP Method: POST
+- Path: /api/products
 - Cuerpo de la Solicitud:
     - Tipo: JSON
     - Descripción: Los detalles del producto que deseas crear.
-- Respuesta Exitosa (201 Created):
+- Successful Response (201 Created):
     - Tipo: JSON
     - Descripción: El producto creado.
 
-### Actualizar un producto existente por ID (updateProduct)
-- Descripción: Este endpoint te permite actualizar un producto existente por su ID.
-- Método HTTP: PUT
-- Ruta: `/api/products/{productId}`
-- Parámetros de ruta:
-    - `productId` (Requerido): El ID del producto que deseas actualizar.
+### Update an Existing Product by ID (updateProduct)
+Description: This endpoint allows you to update an existing product by its ID.
+- HTTP Method: PUT
+- Path: /api/products/{productId}
+- Path Parameters:
+    - productId (Required): El ID del producto que deseas actualizar.
 - Cuerpo de la Solicitud:
     - Tipo: JSON
     - Descripción: Los nuevos detalles del producto.
-- Respuesta Exitosa (200 OK):
+- Successful Response (200 OK):
     - Tipo: JSON
     - Descripción: El producto actualizado.
-- Respuesta No Encontrada (404 Not Found):
+- Not Found Response (404 Not Found):
     - Tipo: Vacío (Sin contenido)
-    - Descripción: Si el producto no se encuentra.
+    - Descripción: If the product is not found.
 
-### Eliminar un producto por ID (deleteProduct)
-- Descripción: Este endpoint te permite eliminar un producto por su ID.
-- Método HTTP: DELETE
-- Ruta: `/api/products/{productId}`
-- Parámetros de ruta:
-    - `productId` (Requerido): El ID del producto que deseas eliminar.
-- Respuesta Exitosa (204 No Content):
+### Delete a Product by ID (deleteProduct)
+Description: This endpoint allows you to delete a product by its ID.
+- HTTP Method: DELETE
+- Path: /api/products/{productId}
+- Path Parameters:
+    - productId (Required): El ID del producto que deseas eliminar.
+- Successful Response (204 No Content):
     - Tipo: Vacío (Sin contenido)
-    - Descripción: Se completa una vez que se ha eliminado el producto.
-s
-### Obtener productos por categoría (getProductsByCategory)
-- Descripción: Este endpoint te permite obtener una lista de productos por su categoría.
-- Método HTTP: GET
-- Ruta: `/api/products/category/{category}`
-- Parámetros de ruta:
-    - `category` (Requerido): La categoría de productos que deseas obtener.
-- Respuesta Exitosa (200 OK):
-    - Tipo: JSON
-    - Descripción: Una lista de productos pertenecientes a la categoría especificada.
+    - Descripción: Se completa una vez que se ha eliminado el producto. s
+      Obtener productos por categoría (getProductsByCategory)
+      Descripción: Este endpoint te permite obtener una lista de productos por su categoría.
+- HTTP Method: GET
+- Path: /api/products/category/{category}
+- Path Parameters:
+    - category (Requerido): La categoría de productos que deseas obtener.
+- Successful Response (200 OK):
+    - Type: JSON
+    - Description: A list of products belonging to the specified category.
 
-## Configuración de la Aplicación
-La configuración de la aplicación se encuentra en el archivo `application.properties`. La base de datos y otras configuraciones se pueden ajustar según las necesidades del entorno.
+## Application Configuration
+The application configuration can be found in the `application.properties` file. Database and other settings can be adjusted as needed for the environment.
 
-## Instalación y Uso
-1. Clona el repositorio.
-2. Importa el proyecto en tu IDE favorito como proyecto Maven.
-3. Ajusta la configuración de la base de datos y otras propiedades en `application.properties`.
-4. Ejecuta la aplicación desde tu IDE o mediante `mvn spring-boot:run`.
+## Installation and Usage
+- Clone the repository.
+- Import the project into your favorite IDE as a Maven project.
+- Adjust the database configuration and other properties in `application.properties`.
+- Run the application from your IDE or using `mvn spring-boot:run`.
 
-## Colaboradores
-- Andres Alfonso Mira Mejia (@IngAamira): Desarrollador de Software
-
+## Contributors
+- Andres Alfonso Mira Mejia (@IngAamira): Software Developer
