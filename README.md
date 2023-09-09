@@ -19,6 +19,7 @@ The project follows a Model-View-Controller (MVC) architecture for web applicati
                       - `repository`
                       - `services`
                     - `domain`
+                      - `model`
                     - `infrastructure`
                         - `adapter`
                         - `db`
