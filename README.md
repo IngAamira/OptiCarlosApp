@@ -15,11 +15,18 @@ The project follows a Model-View-Controller (MVC) architecture for web applicati
             - `com`
                 - `opticarlos`
                     - `application`
+                      - `exceptions`
+                      - `repository`
+                      - `services`
                     - `domain`
                     - `infrastructure`
                         - `adapter`
                         - `db`
+                        - `dto`
                         - `entity`
+                        - `maper`
+                    - `presentation`
+                      - `controller`
 
 The following sections describe the key components and packages of the project.
 
@@ -27,6 +34,9 @@ The following sections describe the key components and packages of the project.
 
 #### `com.opticarlos.application.exceptions`
 Contains custom exception classes like `InvalidProductDataException` and `ProductNotFoundException`.
+
+#### `com.opticarlos.application.repository`
+Contains interfaces for accessing product and category data.
 
 #### `com.opticarlos.application.services`
 Contains application services to handle business logic.
@@ -40,6 +50,9 @@ Contains adapters to interact with the infrastructure and databases.
 #### `com.opticarlos.infrastructure.db`
 Contains configuration and scripts for the PostgreSQL database.
 
+#### `com.opticarlos.infrastructure.dto`
+Contains DTO (Data Transfer Object) classes like `ProductRequest` and `ProductResponse` used for data transfer between the presentation layer and the application layer.
+
 #### `com.opticarlos.infrastructure.entity`
 Contains JPA entities representing products and categories in the database.
 
@@ -48,6 +61,7 @@ Contains mappers that convert between entities and domain objects.
 
 #### `com.opticarlos.presentation.controller`
 Contains controllers that handle HTTP requests and manage the API.
+
 
 ## Exception Handling
 - `com.opticarlos.application.exceptions.InvalidProductDataException`: Exception thrown when invalid product data is encountered while creating or updating a product.
