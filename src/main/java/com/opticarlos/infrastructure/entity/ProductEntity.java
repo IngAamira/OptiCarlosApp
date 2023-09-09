@@ -9,6 +9,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Esta clase representa la entidad de productos en la base de datos.
+ */
 @Entity
 @Table(name = "products")
 @Builder
@@ -63,15 +66,20 @@ public class ProductEntity {
     @Size(max = 255, message = "La longitud del nombre de la imagen no puede exceder los 255 caracteres")
     private String image;
 
-
+    /**
+     * Método ejecutado antes de persistir la entidad en la base de datos para establecer la fecha de creación.
+     */
     @PrePersist
     protected void onCreate() {
-        dateCreated = LocalDateTime.now(); // Establecer la fecha de creación al insertar
+        dateCreated = LocalDateTime.now();
     }
 
+    /**
+     * Método ejecutado antes de actualizar la entidad en la base de datos para establecer la fecha de actualización.
+     */
     @PreUpdate
     protected void onUpdate() {
-        dateUpdated = LocalDateTime.now(); // Establecer la fecha de actualización al actualizar
+        dateUpdated = LocalDateTime.now();
     }
 
 }

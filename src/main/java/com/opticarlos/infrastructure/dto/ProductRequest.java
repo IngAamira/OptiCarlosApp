@@ -1,4 +1,4 @@
-package com.opticarlos.presentation.dto;
+package com.opticarlos.infrastructure.dto;
 
 import com.opticarlos.domain.Category;
 import com.opticarlos.domain.Gender;
